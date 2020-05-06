@@ -1,3 +1,10 @@
+/*
+  config adapted from: 
+  https://webpack.js.org/configuration/
+  https://dev.to/vish448/create-react-project-without-create-react-app-3goh
+  https://linguinecode.com/post/how-to-setup-webpack-dev-server-react-babel
+*/
+
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const CompressionPlugin = require("compression-webpack-plugin")
