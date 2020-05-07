@@ -1,0 +1,5 @@
+export default {
+  FETCH_SUCCESS: "FETCH_SUCCESS",
+  IS_LOADING: "IS_LOADING",
+  HAS_ERROR: "HAS_ERROR",
+}
