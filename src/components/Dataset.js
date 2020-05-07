@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { datasetFetchAsync } from "../redux/actions"
 
-export default (props) => {
+export default () => {
   const dataset = useSelector((state) => state.dataset)
   const isLoading = useSelector((state) => state.datasetIsLoading)
   const hasError = useSelector((state) => state.datasetHasError)
@@ -10,7 +10,7 @@ export default (props) => {
 
   useEffect(() => {
     dispatch(datasetFetchAsync())
-  }, [])
+  }, [dispatch])
 
   if (isLoading) {
     return <p>loading</p>

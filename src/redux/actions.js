@@ -22,7 +22,7 @@ export const datasetFetchSuccess = (dataset) => {
   }
 }
 
-export const datasetFetchAsync = (_params) => {
+export const datasetFetchAsync = () => {
   return (dispatch) => {
     dispatch(datasetIsLoading(true))
 
