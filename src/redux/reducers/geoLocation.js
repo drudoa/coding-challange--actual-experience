@@ -1,26 +1,26 @@
-import types from "../actions/actionTypes"
+import actionTypes from "../actions/actionTypes"
 
 const initialState = {
   data: [],
-  isFetching: false,
   error: undefined,
+  isFetching: false,
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case types.FETCH_DATASET_FAILURE:
+    case actionTypes.FETCH_GEOLOCATION_FAILURE:
       return {
         ...state,
         error: action.error,
         isFetching: false,
       }
-    case types.FETCH_DATASET_REQUEST:
+    case actionTypes.FETCH_GEOLOCATION_REQUEST:
       return {
         ...state,
-        isLoading: action.payload,
+        postcode: action.postcode,
         isFetching: true,
       }
-    case types.FETCH_DATASET_SUCCESS:
+    case actionTypes.FETCH_GEOLOCATION_SUCCESS:
       return {
         ...state,
         data: action.data,

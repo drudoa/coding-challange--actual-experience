@@ -1,6 +1,8 @@
 import { combineReducers } from "redux"
-import * as dataset from "./dataset"
+import dataset from "./dataset"
+import geoLocation from "./geoLocation"
 
 export default combineReducers({
-  ...dataset,
+  dataset,
+  geoLocation,
 })
