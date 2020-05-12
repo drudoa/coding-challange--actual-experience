@@ -9,7 +9,7 @@ export default () => {
   ])
 
   const handleClick = (e) => {
-    setCenter(e.latlng)
+    // setCenter(e.latlng)
   }
 
   return (
