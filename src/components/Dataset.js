@@ -4,9 +4,6 @@ import { datasetFetchAsync } from "../redux/actions"
 
 export default () => {
   const dataset = useSelector((state) => state.dataset)
-  const isLoading = useSelector((state) => state.datasetIsLoading)
-  const hasError = useSelector((state) => state.datasetHasError)
-  const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(datasetFetchAsync())
