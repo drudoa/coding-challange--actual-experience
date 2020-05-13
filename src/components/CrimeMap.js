@@ -9,10 +9,17 @@ import React, { useState, useRef } from "react"
 import PropTypes from "prop-types"
 import { Map, Marker, Popup, Circle, TileLayer } from "react-leaflet"
 
-const CrimeMap = ({ center, data }) => {
+const CrimeMap = ({ center, data, onClick }) => {
   const ref = useRef()
   const [zoom, setZoom] = useState(data ? 14 : 4.5)
   const [activeMarker, setActiveMarker] = useState(null)
+
+  const handleClick = (e) => {
+    // pass geo location to onClick callback when map is clicked
+    const map = ref.current.leafletElement
+    const coords = map.mouseEventToLatLng(e.originalEvent)
+    onClick?.(coords)
+  }
 
   return (
     <Map
@@ -20,6 +27,7 @@ const CrimeMap = ({ center, data }) => {
       zoom={zoom}
       style={{ width: "600px", height: "600px" }}
       ref={ref}
+      onClick={handleClick}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -28,6 +36,7 @@ const CrimeMap = ({ center, data }) => {
 
       {/* catchment area of data aprox 1 mile from center */}
       <Circle center={center} radius={1610} />
+      <Circle color={"red"} center={center} radius={10} />
 
       {data &&
         data.length > 0 &&
