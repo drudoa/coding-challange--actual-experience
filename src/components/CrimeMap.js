@@ -1,3 +1,10 @@
+/*
+  refrences: 
+  - https://blog.logrocket.com/how-to-use-react-leaflet/
+  - https://leafletjs.com/
+  - https://react-leaflet.js.org/
+*/
+
 import React, { useState, useRef } from "react"
 import PropTypes from "prop-types"
 import { Map, Marker, Popup, Circle, TileLayer } from "react-leaflet"
@@ -5,17 +12,13 @@ import { Map, Marker, Popup, Circle, TileLayer } from "react-leaflet"
 const CrimeMap = ({ center, data }) => {
   const ref = useRef()
   const [zoom, setZoom] = useState(data ? 14 : 4.5)
-
-  const handleClick = (e) => {
-    // setCenter(e.latlng)
-  }
+  const [activeMarker, setActiveMarker] = useState(null)
 
   return (
     <Map
       center={center}
       zoom={zoom}
       style={{ width: "600px", height: "600px" }}
-      onclick={handleClick}
       ref={ref}
     >
       <TileLayer
@@ -32,8 +35,25 @@ const CrimeMap = ({ center, data }) => {
           <Marker
             key={crime.id}
             position={[crime.location.latitude, crime.location.longitude]}
+            onclick={() => setActiveMarker(crime)}
           />
         ))}
+
+      {activeMarker && (
+        <Popup
+          position={[
+            activeMarker.location.latitude,
+            activeMarker.location.longitude,
+          ]}
+          offset={[0, -36]}
+          onClose={() => setActiveMarker(null)}
+        >
+          <div>
+            <h2>{activeMarker.category}</h2>
+            <p>{activeMarker.location.street.name}</p>
+          </div>
+        </Popup>
+      )}
     </Map>
   )
 }
