@@ -9,9 +9,8 @@ import React, { useState, useRef } from "react"
 import PropTypes from "prop-types"
 import { Map, Marker, Popup, Circle, TileLayer } from "react-leaflet"
 
-const CrimeMap = ({ center, data, onClick }) => {
+const CrimeMap = ({ center, data, onClick, zoom = 5, onZoom }) => {
   const ref = useRef()
-  const [zoom, setZoom] = useState(data ? 14 : 4.5)
   const [activeMarker, setActiveMarker] = useState(null)
 
   const handleClick = (e) => {
@@ -28,6 +27,7 @@ const CrimeMap = ({ center, data, onClick }) => {
       style={{ width: "600px", height: "600px" }}
       ref={ref}
       onClick={handleClick}
+      onZoom={(e) => onZoom?.(e.target._zoom)}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
