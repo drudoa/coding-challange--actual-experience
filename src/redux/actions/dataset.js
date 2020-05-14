@@ -31,7 +31,7 @@ export const fetchDataset = (params) => {
   return (dispatch) => {
     dispatch(datasetFetchRequest(params))
 
-    const endpoint = "https://data.police.uk/api/crimes-at-location"
+    const endpoint = "https://data.police.uk/api/all-crime"
     const uri = endpoint + "?" + encodeUrlParams(params)
 
     return fetch(uri)
