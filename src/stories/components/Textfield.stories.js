@@ -8,6 +8,7 @@ export default { title: "TextField" }
 export const textField = () => <TextField />
 export const textFieldSized = () => <TextField size={5} />
 export const textFieldError = () => <TextField error />
+export const textFieldDisabled = () => <TextField disabled />
 
 export const textWithInlineButton = () => (
   <Fieldset>

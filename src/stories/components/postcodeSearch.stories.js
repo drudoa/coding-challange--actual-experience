@@ -12,3 +12,9 @@ export const main = () => {
     </div>
   )
 }
+
+export const loading = () => (
+  <div style={{ width: 200 }}>
+    <PostcodeSearch value={"sn11 0ub"} isLoading={true} />
+  </div>
+)

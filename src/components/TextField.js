@@ -13,6 +13,10 @@ const TextField = styled.input.attrs(() => ({
   boxSizing: "border-box",
   minWidth: 64,
   width: !size && "100%",
+  "&:disabled": {
+    backgroundColor: "#e0e0e0",
+    borderColor: "rgba(0,0,0,0.26)",
+  },
   ...styles,
 }))
 

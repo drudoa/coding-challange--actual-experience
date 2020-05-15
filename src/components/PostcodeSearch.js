@@ -1,12 +1,20 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Fieldset from "./Fieldset"
 import HelperText from "./HelperText"
 import TextField from "./TextField"
 import Button from "./Button"
 import Label from "./Label"
+import Overlay from "./Overlay"
 import validatePostcode from "../util/validatePostcode"
+import { DotLoader } from "react-spinners"
 
-const PostcodeSearch = ({ value, onChange, onSubmit, isLoading }) => {
+const PostcodeSearch = ({
+  value,
+  onChange,
+  onSubmit,
+  isLoading = false,
+  onError,
+}) => {
   const [dirty, setDirty] = useState(false)
   const [error, setError] = useState("")
 
@@ -35,10 +43,20 @@ const PostcodeSearch = ({ value, onChange, onSubmit, isLoading }) => {
     onChange?.(val)
   }
 
+  useEffect(() => {
+    if (error) onError?.(error)
+  }, [error])
+
   return (
-    <Fieldset>
+    <Fieldset styles={{ position: "relative" }}>
       <Label>Postcode</Label>
-      <TextField error={error} value={value} onChange={handleChange} required />
+      <TextField
+        disabled={isLoading}
+        error={error}
+        value={value}
+        onChange={handleChange}
+        required
+      />
       <HelperText color="red">{dirty && error}</HelperText>
 
       <Button
@@ -49,6 +67,9 @@ const PostcodeSearch = ({ value, onChange, onSubmit, isLoading }) => {
       >
         Search
       </Button>
+      <Overlay visable={isLoading}>
+        <DotLoader color={"#1976d2"} css={{ margin: "0 auto" }} />
+      </Overlay>
     </Fieldset>
   )
 }
