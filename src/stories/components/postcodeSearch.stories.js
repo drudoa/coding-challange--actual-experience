@@ -1,20 +1,16 @@
 import React, { useState } from "react"
 import PostcodeSearch from "../../components/PostcodeSearch"
+import Provider from "../../redux/Provider"
 
-export default { title: "Postcode Search" }
-
-export const main = () => {
-  const [value, setValue] = useState("")
-
-  return (
-    <div style={{ width: 200 }}>
-      <PostcodeSearch value={value} onChange={(value) => setValue(value)} />
-    </div>
-  )
+export default {
+  title: "Postcode Search",
+  decorators: [
+    (storyFn) => (
+      <Provider>
+        <div style={{ width: 200 }}>{storyFn()}</div>
+      </Provider>
+    ),
+  ],
 }
 
-export const loading = () => (
-  <div style={{ width: 200 }}>
-    <PostcodeSearch value={"sn11 0ub"} isLoading={true} />
-  </div>
-)
+export const main = () => <PostcodeSearch />
