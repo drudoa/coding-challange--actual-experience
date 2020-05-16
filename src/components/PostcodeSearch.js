@@ -72,7 +72,7 @@ const PostcodeSearch = () => {
         onClick={validate}
         disabled={isFetching || !value || error}
       >
-        Search
+        Crime Search
       </Button>
 
       {data && (
