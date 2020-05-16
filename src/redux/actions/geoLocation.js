@@ -14,7 +14,7 @@ export const geoLocationRequest = (postcode) => {
 export const geoLocationFailure = (error) => {
   return {
     type: types.FETCH_GEOLOCATION_FAILURE,
-    error,
+    error: error,
   }
 }
 
@@ -30,14 +30,13 @@ export const fetchGeoLocation = (postcode) => {
     dispatch(geoLocationRequest(postcode))
 
     return fetch(`https://api.postcodes.io/postcodes/${encodeURI(postcode)}`)
-      .then(
-        (res) => res.json(),
-        // Do not use catch, because that will also catch
-        // any errors in the dispatch and resulting render,
-        // causing a loop of 'Unexpected batch number' errors.
-        // https://github.com/facebook/react/issues/6895
-        (error) => dispatch(geoLocationFailure(error))
-      )
-      .then((json) => dispatch(goLocationSuccess(json)))
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.status === 200) {
+          dispatch(goLocationSuccess(json))
+        } else {
+          dispatch(geoLocationFailure(json.error))
+        }
+      })
   }
 }
