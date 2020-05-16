@@ -60,7 +60,8 @@ describe("dataset async actions", () => {
     const value = { somData: "some value" }
 
     fetchMock.getOnce(
-      "https://data.police.uk/api/all-crime?" + encodeUrlParams(params),
+      "https://data.police.uk/api/crimes-street/all-crime?" +
+        encodeUrlParams(params),
       {
         headers: { "content-type": "application/json" },
         body: JSON.stringify(value),
