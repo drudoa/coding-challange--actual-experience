@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import Fieldset from "./Fieldset"
 import HelperText from "./HelperText"
 import TextField from "./TextField"
@@ -7,17 +7,20 @@ import Label from "./Label"
 import Overlay from "./Overlay"
 import validatePostcode from "../util/validatePostcode"
 import { DotLoader } from "react-spinners"
+import { useSelector, useDispatch } from "react-redux"
+import { fetchGeoLocation } from "../redux/actions/geoLocation"
 
-const PostcodeSearch = ({
-  value,
-  onChange,
-  onSubmit,
-  isLoading = false,
-  onError,
-}) => {
+const PostcodeSearch = () => {
+  const [value, setValue] = useState("")
   const [dirty, setDirty] = useState(false)
   const [error, setError] = useState("")
+  const { data, isFetching, error: geoError } = useSelector(
+    (state) => state.geoLocation
+  )
+  const dispatch = useDispatch()
+  const lookupPostcode = (postcode) => dispatch(fetchGeoLocation(postcode))
 
+  // basic postcode validation
   const validate = () => {
     setError("")
 
@@ -28,46 +31,57 @@ const PostcodeSearch = ({
       setError("Postcode is invalid")
       return
     } else {
-      onSubmit?.()
+      lookupPostcode(value)
     }
   }
 
+  // only show user errors if they have attempted to submit form
   const handleChange = (e) => {
     setError("")
     const val = e.target.value
+
     if (val) {
       setDirty(true)
     } else {
       setDirty(false)
     }
-    onChange?.(val)
+    setValue(val)
   }
 
-  useEffect(() => {
-    if (error) onError?.(error)
-  }, [error])
+  // handle enter key
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") validate()
+  }
 
   return (
     <Fieldset styles={{ position: "relative" }}>
       <Label>Postcode</Label>
       <TextField
-        disabled={isLoading}
+        disabled={isFetching}
         error={error}
         value={value}
         onChange={handleChange}
+        onKeyPress={handleKeyPress}
         required
       />
-      <HelperText color="red">{dirty && error}</HelperText>
+      <HelperText color="red">{dirty && (error || geoError)}</HelperText>
 
       <Button
         type="submit"
         styles={{ width: "100%" }}
         onClick={validate}
-        disabled={isLoading || !value || error}
+        disabled={isFetching || !value || error}
       >
         Search
       </Button>
-      <Overlay visable={isLoading}>
+
+      {data && (
+        <HelperText>
+          {data.parish}, {data.admin_district}
+        </HelperText>
+      )}
+
+      <Overlay visable={isFetching}>
         <DotLoader color={"#1976d2"} css={{ margin: "0 auto" }} />
       </Overlay>
     </Fieldset>
