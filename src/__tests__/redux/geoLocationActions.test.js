@@ -14,6 +14,7 @@ const mockStore = configureMockStore(middlewares)
 
 const postcode = "sn11 0ub"
 const response = {
+  status: 200,
   result: {
     postcode,
     longitude: -2.005317,
@@ -69,7 +70,7 @@ describe("GeoLocation async actions", () => {
         data: response.result,
       },
     ]
-    const store = mockStore({ data: [], isFetching: false, error: undefined })
+    const store = mockStore({ data: null, isFetching: false, error: undefined })
 
     return store.dispatch(actions.fetchGeoLocation(postcode)).then(() => {
       // return of async actions
