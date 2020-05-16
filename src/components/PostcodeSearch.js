@@ -54,7 +54,7 @@ const PostcodeSearch = () => {
   }
 
   return (
-    <Fieldset styles={{ position: "relative" }}>
+    <Fieldset styles={{ position: "relative", flex: 1 }}>
       <Label>Postcode</Label>
       <TextField
         disabled={isFetching}

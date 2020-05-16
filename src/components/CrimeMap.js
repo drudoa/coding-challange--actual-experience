@@ -74,12 +74,10 @@ CrimeMap.defaultProps = {
 
 CrimeMap.propTypes = {
   center: PropTypes.array,
-  data: PropTypes.shape({
-    location: PropTypes.shape({
-      latitude: PropTypes.string.isRequired,
-      longitude: PropTypes.string.isRequired,
-    }).isRequired,
-  }),
+  data: PropTypes.array,
+  onClick: PropTypes.func,
+  zoom: PropTypes.number,
+  onZoom: PropTypes.func,
 }
 
 export default CrimeMap
