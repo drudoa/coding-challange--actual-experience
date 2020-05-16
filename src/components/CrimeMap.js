@@ -9,7 +9,7 @@ import React, { useState, useRef } from "react"
 import PropTypes from "prop-types"
 import { Map, Marker, Popup, Circle, TileLayer } from "react-leaflet"
 
-const CrimeMap = ({ center, data, onClick, zoom, onZoom }) => {
+const CrimeMap = ({ center, data, onClick, zoom, onZoom, width, height }) => {
   const ref = useRef()
   const [activeMarker, setActiveMarker] = useState(null)
 
@@ -24,7 +24,7 @@ const CrimeMap = ({ center, data, onClick, zoom, onZoom }) => {
     <Map
       center={center}
       zoom={zoom}
-      style={{ width: "600px", height: "600px" }}
+      style={{ width, height }}
       ref={ref}
       onClick={handleClick}
       onZoom={(e) => onZoom?.(e.target._zoom)}
@@ -70,6 +70,8 @@ const CrimeMap = ({ center, data, onClick, zoom, onZoom }) => {
 CrimeMap.defaultProps = {
   center: [55.10351605801967, -5.185546875000001],
   zoom: 5,
+  width: "100%",
+  height: 400,
 }
 
 CrimeMap.propTypes = {
@@ -78,6 +80,8 @@ CrimeMap.propTypes = {
   onClick: PropTypes.func,
   zoom: PropTypes.number,
   onZoom: PropTypes.func,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 
 export default CrimeMap
