@@ -1,3 +1,11 @@
+/*
+  config adapted from: 
+  https://webpack.js.org/configuration/
+  https://dev.to/vish448/create-react-project-without-create-react-app-3goh
+  https://linguinecode.com/post/how-to-setup-webpack-dev-server-react-babel
+  https://www.robinwieruch.de/webpack-eslint
+*/
+
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const CompressionPlugin = require("compression-webpack-plugin")
@@ -7,11 +15,11 @@ module.exports = {
   entry: "./index.js",
   output: {
     path: path.resolve(__dirname, "build"),
-    filename: "bundle.js",
+    filename: "[name].bundle.js",
   },
   module: {
     rules: [
-      { test: /\.(js)$/, use: "babel-loader" },
+      { test: /\.(js)$/, use: ["babel-loader", "eslint-loader"] },
       { test: /\.css$/, use: ["style-loader", "css-loader"] },
     ],
   },
