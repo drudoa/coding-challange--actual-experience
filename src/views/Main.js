@@ -21,21 +21,26 @@ const Main = () => {
   return (
     <div
       style={{
-        // display: "flex",
         maxWidth: 960,
         margin: "0 auto",
         paddingTop: 28,
       }}
     >
-      <PostcodeSearch />
+      <PostcodeSearch style={{ minHeight: 200 }} />
       <CrimeMap
         data={data}
         center={postcode ? [postcode.latitude, postcode.longitude] : undefined}
         zoom={postcode ? 14 : undefined}
+        style={{ marginBottom: 16, height: 450 }}
       />
-      <CrimeChart data={data} identity="category" />
-      {/* <div style={{ flex: 1 }}>
-      </div> */}
+      {data.length > 0 && (
+        <>
+          <h2 style={{ textAlign: "center", textDecoration: "underline" }}>
+            Crimes by Category
+          </h2>
+          <CrimeChart data={data} identity="category" />
+        </>
+      )}
     </div>
   )
 }

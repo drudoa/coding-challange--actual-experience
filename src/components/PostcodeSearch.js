@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import PropTypes from "prop-types"
 import Fieldset from "./Fieldset"
 import HelperText from "./HelperText"
 import TextField from "./TextField"
@@ -10,7 +11,7 @@ import { DotLoader } from "react-spinners"
 import { useSelector, useDispatch } from "react-redux"
 import { fetchGeoLocation } from "../redux/actions/geoLocation"
 
-const PostcodeSearch = () => {
+const PostcodeSearch = ({ style }) => {
   const [value, setValue] = useState("")
   const [dirty, setDirty] = useState(false)
   const [error, setError] = useState("")
@@ -54,7 +55,7 @@ const PostcodeSearch = () => {
   }
 
   return (
-    <Fieldset styles={{ position: "relative", flex: 1 }}>
+    <Fieldset styles={{ position: "relative", flex: 1, ...style }}>
       <Label>Postcode</Label>
       <TextField
         disabled={isFetching}
@@ -86,6 +87,10 @@ const PostcodeSearch = () => {
       </Overlay>
     </Fieldset>
   )
+}
+
+PostcodeSearch.propTypes = {
+  style: PropTypes.object,
 }
 
 export default PostcodeSearch
